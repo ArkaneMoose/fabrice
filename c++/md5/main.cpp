@@ -15,7 +15,7 @@ int maxChars = 15;
 unsigned long long int counter = 0;
 void checkPassword(string password);
 void recurse(int width, int position, string baseString);
-
+bool reset = false; 
 void decrypt(string input)
 {
 	cout << "Decrypt Input:" << endl << input << endl;
@@ -46,6 +46,18 @@ string encrypt_md5(string input)
 void checkPassword(string password) {
 	if (counter >= si)
 	{
+	if (reset == false)
+	{
+		reset = true;
+		counter = 0;
+		cout << "counter reset" << endl; 
+		//si = 0;	
+		fi = fi - si; 
+		cout << "final int set" << endl;
+		si = 0;
+		cout << "start int reset" << endl; 
+		
+	}
 	if (counter <= fi || fi == 0)
 	{
     string md5hash = encrypt_md5(password);
