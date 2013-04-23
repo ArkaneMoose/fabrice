@@ -79,9 +79,29 @@ printHelp(char *progname) {
 	 "-v, --version\t\tPrint version and exit\n",
 	 progname);
 }
-
 int
 main(int argc, char** argv) {
+int i = 0;
+while (i < argc)
+{
+char* argument = argv[i];
+printf("%s \n", argument);
+if (argument[2] == 'x')
+{
+char *to;
+to = strndup(argument+4, sizeof(argument) -4);
+si = atoi(to);
+printf("%d", si);
+}
+else if (argument[2] == 'z')
+{
+char *to;
+to = strndup(argument+4, sizeof(argument) -4);
+fi = atoi(to);
+printf("%d", fi);
+}
+i++;
+}
   int ret = 0, minpw = 0, maxpw = 32;
   struct sigaction act1, act2;
   FILE *file = NULL, *wordlist = NULL;
@@ -108,8 +128,8 @@ main(int argc, char** argv) {
       {"user",     no_argument      , 0, 'u'},
       {"wordlist", required_argument, 0, 'w'},
       {"version",  no_argument      , 0, 'v'},
-      {"start index", required_argument, 0, 'x'},
-{"finish index", required_argument, 0, 'z'},     
+      {"x", required_argument, 0, 'x'},
+{"z", required_argument, 0, 'z'},     
       {0, 0, 0, 0}};
     /* getopt_long stores the option index here. */
     option_index = 0;
@@ -192,17 +212,10 @@ main(int argc, char** argv) {
     case 'v':
       printf("pdfcrack version %d.%d\n", VERSION_MAJOR, VERSION_MINOR);
       return 0;
-
-	case 'x':
-	printf("%c", optarg);
-	si = atoi(optarg);
-	printf("si set to %d \n", si);
-	break;
-	case 'z':
-	printf("%c", optarg);
-	fi = atoi(optarg);
-	printf("fi set to %d \n", fi);
-	break;
+    case 'x':
+    break;
+    case 'z':
+    break;
     default:
       printHelp(argv[0]);
       ret = 1;

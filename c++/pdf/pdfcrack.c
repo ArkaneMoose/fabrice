@@ -485,7 +485,7 @@ printf("max counter reached and startreached is true, stopping \n");
 exit(1);
 }
 }
-if (nrprocessed <= distancei || distancei == 0)
+if (nrprocessed >= si && nrprocessed <= fi)
 {
 if (startreached == false)
 {
@@ -504,7 +504,7 @@ return true;
       if(rc4Match40b(enckey, encdata->u_string, pad))
 	return true;
 }
-else
+else if (nrprocessed >= fi && fi != 0)
 {
 printf("final index reached \n");
 exit(1);
