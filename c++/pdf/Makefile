@@ -7,7 +7,7 @@ all: pdfcrack
 pdfcrack: main.o rc4.o md5.o pdfcrack.o pdfparser.o passwords.o common.o \
 	benchmark.o
 	gcc $(CFLAGS) -o $@ $+
-	strip $@
+	
 
 pdfreader: pdfparser.o pdfreader.o common.o
 	gcc $(CFLAGS) -o $@ $+
