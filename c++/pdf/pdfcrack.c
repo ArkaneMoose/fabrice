@@ -489,6 +489,7 @@ if (nrprocessed >= si && nrprocessed <= fi)
 {
 if (startreached == false)
 {
+printf("current nrprocessed %d \n", nrprocessed);
 nrprocessed = 0;
 printf("Start Reached! Counter reset to %d \n", nrprocessed);
 startreached = true;

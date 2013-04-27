@@ -62,22 +62,22 @@ autoSave(int sig) {
 static void
 printHelp(char *progname) {
   printf("Usage: %s -f filename [OPTIONS]\n"
-	 "OPTIONS:\n"
-	 "-b, --bench\t\tperform benchmark and exit\n"
-	 "-c, --charset=STRING\tUse the characters in STRING as charset\n"
-	 "-w, --wordlist=FILE\tUse FILE as source of passwords to try\n"
-	 "-n, --minpw=INTEGER\tSkip trying passwords shorter than this\n"
-	 "-m, --maxpw=INTEGER\tStop when reaching this passwordlength\n"
-	 "-l, --loadState=FILE\tContinue from the state saved in FILENAME\n"
-	 "-o, --owner\t\tWork with the ownerpassword\n"
-	 "-u, --user\t\tWork with the userpassword (default)\n"
-	 "-p, --password=STRING\tGive userpassword to speed up breaking\n"
-	 "\t\t\townerpassword (implies -o)\n"
-	 "-q, --quiet\t\tRun quietly\n"
-	 "-s, --permutate\t\tTry permutating the passwords (currently only\n"
-	 "\t\t\tsupports switching first character to uppercase)\n"
-	 "-v, --version\t\tPrint version and exit\n",
-	 progname);
+"OPTIONS:\n"
+"-b, --bench\t\tperform benchmark and exit\n"
+"-c, --charset=STRING\tUse the characters in STRING as charset\n"
+"-w, --wordlist=FILE\tUse FILE as source of passwords to try\n"
+"-n, --minpw=INTEGER\tSkip trying passwords shorter than this\n"
+"-m, --maxpw=INTEGER\tStop when reaching this passwordlength\n"
+"-l, --loadState=FILE\tContinue from the state saved in FILENAME\n"
+"-o, --owner\t\tWork with the ownerpassword\n"
+"-u, --user\t\tWork with the userpassword (default)\n"
+"-p, --password=STRING\tGive userpassword to speed up breaking\n"
+"\t\t\townerpassword (implies -o)\n"
+"-q, --quiet\t\tRun quietly\n"
+"-s, --permutate\t\tTry permutating the passwords (currently only\n"
+"\t\t\tsupports switching first character to uppercase)\n"
+"-v, --version\t\tPrint version and exit\n",
+progname);
 }
 int
 main(int argc, char** argv) {
@@ -86,21 +86,9 @@ while (i < argc)
 {
 char* argument = argv[i];
 printf("%s \n", argument);
-if (argument[2] == 'x')
-{
-char *to;
-to = strndup(argument+4, sizeof(argument) -4);
-si = atoi(to);
-}
-else if (argument[2] == 'z')
-{
-char *to;
-to = strndup(argument+4, sizeof(argument) -4);
-fi = atoi(to);
-}
 i++;
 }
-  int ret = 0, minpw = 0, maxpw = 32;
+  int ret = 0, minpw = 0, maxpw = 32, startint = 0, finishint = 0;
   struct sigaction act1, act2;
   FILE *file = NULL, *wordlist = NULL;
   bool recovery = false, quiet = false, 
@@ -126,8 +114,8 @@ i++;
       {"user",     no_argument      , 0, 'u'},
       {"wordlist", required_argument, 0, 'w'},
       {"version",  no_argument      , 0, 'v'},
-      {"x", required_argument, 0, 'x'},
-{"z", required_argument, 0, 'z'},     
+      {"startint", required_argument, 0, 'x'},
+{"finishint", required_argument, 0, 'z'},     
       {0, 0, 0, 0}};
     /* getopt_long stores the option index here. */
     option_index = 0;
@@ -211,8 +199,10 @@ i++;
       printf("pdfcrack version %d.%d\n", VERSION_MAJOR, VERSION_MINOR);
       return 0;
     case 'x':
+    startint = atoi(optarg);
     break;
     case 'z':
+    finishint = atoi(optarg);
     break;
     default:
       printHelp(argv[0]);
