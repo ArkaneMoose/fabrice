@@ -89,6 +89,8 @@ printf("%s \n", argument);
 i++;
 }
   int ret = 0, minpw = 0, maxpw = 32, startint = 0, finishint = 0;
+  unsigned long long int maximumcounter = 0;
+
   struct sigaction act1, act2;
   FILE *file = NULL, *wordlist = NULL;
   bool recovery = false, quiet = false, 
@@ -115,6 +117,7 @@ i++;
       {"wordlist", required_argument, 0, 'w'},
       {"version",  no_argument      , 0, 'v'},
       {"startint", required_argument, 0, 'x'},
+{"maxcounter", required_argument, 0, 'y'},
 {"finishint", required_argument, 0, 'z'},     
       {0, 0, 0, 0}};
     /* getopt_long stores the option index here. */
@@ -203,6 +206,10 @@ i++;
     printf("startint is %d \n", startint);
     
     break;
+case 'y':
+maximumcounter = atoi(optarg);
+printf("maximumcounter is %d \n", maximumcounter);
+break;
     case 'z':
     finishint = atoi(optarg);
     printf("finishint is %d \n", finishint);
@@ -317,7 +324,7 @@ i++;
   /** Try to initialize the cracking-engine */
   if(!initPDFCrack(e, userpassword, work_with_user, wordlistfile,
 		   wordlistfile?Wordlist:Generative, wordlist, charset, 
-		   (unsigned int)minpw, (unsigned int)maxpw, permutation, startint, finishint)) {
+		   (unsigned int)minpw, (unsigned int)maxpw, permutation, startint, finishint, maximumcounter)) {
     cleanPDFCrack();
     fprintf(stderr, "Wrong userpassword, '%s'\n", userpassword);
     ret = 7;

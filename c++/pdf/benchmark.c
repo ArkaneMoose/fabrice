@@ -201,14 +201,14 @@ pdf_128b_bench(void) {
     16, 1, 4, 128, -2359344, 3, 2
   };
 
-  initPDFCrack(&e, NULL, true, NULL, Generative, NULL, charset, 0, 4, true, 0, 0);
+  initPDFCrack(&e, NULL, true, NULL, Generative, NULL, charset, 0, 4, true, 0, 0, 0);
 
   startTime = clock();
   runCrackRev3();
   endTime = clock();
   print_and_clean("PDF (128, user):", getNrProcessed(), &startTime, &endTime);
 
-  initPDFCrack(&e, NULL, false, NULL, Generative, NULL, charset, 0, 4, true, 0, 0);
+  initPDFCrack(&e, NULL, false, NULL, Generative, NULL, charset, 0, 4, true, 0, 0,0);
 
   startTime = clock();
   runCrackRev3_o();
@@ -216,7 +216,7 @@ pdf_128b_bench(void) {
 
   print_and_clean("PDF (128, owner):", getNrProcessed(), &startTime, &endTime);
 
-  initPDFCrack(&e,password, false, NULL, Generative, NULL, charset, 0, 4,true,0,0);
+  initPDFCrack(&e,password, false, NULL, Generative, NULL, charset, 0, 4,true,0,0,0);
 
   startTime = clock();
   runCrackRev3_of();
@@ -248,7 +248,7 @@ pdf_40b_bench(void) {
     16, 1, 4, 40, -64, 2, 1
   };
 
-  initPDFCrack(&e, NULL, true, NULL, Generative, NULL, charset, 0, 5, true,0,0);
+  initPDFCrack(&e, NULL, true, NULL, Generative, NULL, charset, 0, 5, true,0,0,0);
 
   startTime = clock();
   runCrackRev2();
@@ -256,14 +256,14 @@ pdf_40b_bench(void) {
 
   print_and_clean("PDF (40, user):\t",getNrProcessed(),&startTime, &endTime);
 
-  initPDFCrack(&e, NULL, false, NULL, Generative, NULL, charset, 0, 5, true,0,0);
+  initPDFCrack(&e, NULL, false, NULL, Generative, NULL, charset, 0, 5, true,0,0,0);
 
   startTime = clock();
   runCrackRev2_o();
   endTime = clock();
 
   print_and_clean("PDF (40, owner):",getNrProcessed(), &startTime, &endTime);
-  initPDFCrack(&e, password, false, NULL, Generative, NULL, charset,0, 5,true,0,0);
+  initPDFCrack(&e, password, false, NULL, Generative, NULL, charset,0, 5,true,0,0,0);
 
   startTime = clock();
   runCrackRev2_of();

@@ -57,7 +57,7 @@ static unsigned int si = 0;
 static unsigned int fi = 0;
 /** statistics */
 static bool startreached = false;  
-static unsigned long long int maxcounter = 100000000;
+static unsigned long long int maxcounter = 0;
 static unsigned long long int nrprocessed;
 static time_t startTime;
 static unsigned long long int distancei = 0;
@@ -448,7 +448,13 @@ printf("%d ------ %d", si, fi);
     BEGIN_CRACK_LOOP();
 
     do {
-if (nrprocessed >= maxcounter)
+if (maxcounter == 0 && nrprocessed > 1000000000)
+{
+nrprocessed = 0;
+printf("max counter not set and is 0, nrprocessed reset to %d \n", nrprocessed);
+
+}
+if (nrprocessed >= maxcounter && maxcounter != 0)
 {
 printf("nrprocessed exceeded maxcounter. value=%d \n", nrprocessed);
 if (startreached == false)
@@ -614,7 +620,7 @@ bool
 initPDFCrack(const EncData *e, const uint8_t *upw, const bool user,
 	     const char *wl, const passwordMethod pm, FILE *file,
 	     const char *cs, const unsigned int minPw,
-	     const unsigned int maxPw, const bool perm, const int startinteger, const int finishinteger) {
+	     const unsigned int maxPw, const bool perm, const int startinteger, const int finishinteger, const unsigned long long int max_counter) {
   uint8_t buf[128];
   unsigned int upwlen;
   uint8_t *tmp;
@@ -680,6 +686,8 @@ initPDFCrack(const EncData *e, const uint8_t *upw, const bool user,
 printf("startinteger = %d and finishinteger = %d\n", startinteger, finishinteger);
   si = startinteger;
   fi = finishinteger;
+  maxcounter = max_counter;
+printf("maxcounter = %d \n", maxcounter);
   return true;
 }
 
