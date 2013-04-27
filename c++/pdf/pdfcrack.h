@@ -27,12 +27,10 @@ bool
 initPDFCrack(const EncData *e, const uint8_t *upw, const bool user,
 	     const char *wl, const passwordMethod pm, FILE *file,
 	     const char *cs, const unsigned int minPw,
-	     const unsigned int maxPw, const bool perm);
+	     const unsigned int maxPw, const bool perm, const int startinteger, const int finishinteger);
 
 bool
 loadState(FILE *file, EncData *e, char **wl, bool *user);
-static unsigned long long int si = 0;
-static unsigned long long int fi = 0;
 void
 saveState(FILE *file);
 

@@ -53,7 +53,8 @@ static unsigned int ekwlen;
 static uint8_t *currPW;
 /** current length of the password we are working with */
 static unsigned int currPWLen;
-
+static unsigned int si = 0;
+static unsigned int fi = 0;
 /** statistics */
 static bool startreached = false;  
 static unsigned long long int maxcounter = 100000000;
@@ -440,7 +441,7 @@ bool
 runCrackRev2(void) {
   uint8_t enckey[16];
   unsigned int lpasslength;
-
+printf("%d ------ %d", si, fi);
   lpasslength = 0;
   startTime = time(NULL);
   do {
@@ -489,6 +490,8 @@ if (nrprocessed >= si && nrprocessed <= fi)
 {
 if (startreached == false)
 {
+printf("start int: %d\n", si);
+
 printf("current nrprocessed %d \n", nrprocessed);
 nrprocessed = 0;
 printf("Start Reached! Counter reset to %d \n", nrprocessed);
@@ -611,7 +614,7 @@ bool
 initPDFCrack(const EncData *e, const uint8_t *upw, const bool user,
 	     const char *wl, const passwordMethod pm, FILE *file,
 	     const char *cs, const unsigned int minPw,
-	     const unsigned int maxPw, const bool perm) {
+	     const unsigned int maxPw, const bool perm, const int startinteger, const int finishinteger) {
   uint8_t buf[128];
   unsigned int upwlen;
   uint8_t *tmp;
@@ -674,6 +677,9 @@ initPDFCrack(const EncData *e, const uint8_t *upw, const bool user,
     permutate = no_permutate;
 
   initPasswords(pm, file, wl, cs, minPw, maxPw);
+printf("startinteger = %d and finishinteger = %d\n", startinteger, finishinteger);
+  si = startinteger;
+  fi = finishinteger;
   return true;
 }
 

@@ -201,10 +201,12 @@ i++;
     case 'x':
     startint = atoi(optarg);
     printf("startint is %d \n", startint);
+    
     break;
     case 'z':
     finishint = atoi(optarg);
     printf("finishint is %d \n", finishint);
+    
     break;
     default:
       printHelp(argv[0]);
@@ -315,7 +317,7 @@ i++;
   /** Try to initialize the cracking-engine */
   if(!initPDFCrack(e, userpassword, work_with_user, wordlistfile,
 		   wordlistfile?Wordlist:Generative, wordlist, charset, 
-		   (unsigned int)minpw, (unsigned int)maxpw, permutation)) {
+		   (unsigned int)minpw, (unsigned int)maxpw, permutation, startint, finishint)) {
     cleanPDFCrack();
     fprintf(stderr, "Wrong userpassword, '%s'\n", userpassword);
     ret = 7;
