@@ -47,7 +47,11 @@ string encrypt_md5(string input)
     return (md5(input));
 }
 void checkPassword(string password) {
-	if (counter >= max_counter)
+	if (max_counter == 0 && counter >= 100000000)
+	{
+	counter = 0;
+	}
+	if (counter >= max_counter && max_counter != 0)
 	{
 		if (start_reached == false)
 		{
@@ -153,6 +157,10 @@ int main(int argc, char* argv[]) {
 			int i; 
 			istringstream(s.substr(4)) >> i;
 			fi = i; 
+		}
+		else if (s.substr(0, 4) == "-mc=")
+		{
+			istringstream(s.substr(4)) >> max_counter;
 		}
 		else
 		{
