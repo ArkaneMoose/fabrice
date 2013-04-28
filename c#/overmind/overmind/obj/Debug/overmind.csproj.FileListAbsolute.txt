@@ -1,0 +1,5 @@
+C:\Users\pillybuilt\Documents\GitHub\fabrice\c#\overmind\overmind\bin\Debug\overmind.exe
+C:\Users\pillybuilt\Documents\GitHub\fabrice\c#\overmind\overmind\bin\Debug\overmind.pdb
+C:\Users\pillybuilt\Documents\GitHub\fabrice\c#\overmind\overmind\obj\Debug\overmind.csprojResolveAssemblyReference.cache
+C:\Users\pillybuilt\Documents\GitHub\fabrice\c#\overmind\overmind\obj\Debug\overmind.exe
+C:\Users\pillybuilt\Documents\GitHub\fabrice\c#\overmind\overmind\obj\Debug\overmind.pdb
