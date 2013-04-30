@@ -90,7 +90,7 @@ i++;
 }
   int ret = 0, minpw = 0, maxpw = 32, startint = 0, finishint = 0;
   unsigned long long int maximumcounter = 0;
-
+  unsigned long long int distanceint = 0; 
   struct sigaction act1, act2;
   FILE *file = NULL, *wordlist = NULL;
   bool recovery = false, quiet = false, 
@@ -105,6 +105,7 @@ i++;
     static struct option long_options[] = {
       {"bench",    no_argument      , 0, 'b'},
       {"charset",  required_argument, 0, 'c'},
+      {"distancei", required_argument, 0, 'd'},
       {"file",     required_argument, 0, 'f'},
       {"loadState",required_argument, 0, 'l'},
       {"maxpw",    required_argument, 0, 'm'},
@@ -123,7 +124,7 @@ i++;
     /* getopt_long stores the option index here. */
     option_index = 0;
      
-    c = getopt_long(argc, argv, "bc:f:l:m:n:op:qsuw:v:xz",
+    c = getopt_long(argc, argv, "bcd:f:l:m:n:op:qsuw:v:xyz",
 			long_options, &option_index);
     
     /* Detect the end of the options. */
@@ -140,6 +141,10 @@ i++;
       else
 	charset = strdup(optarg);
       break;
+    case 'd':
+    distanceint = atoi(optarg); 
+    printf("distanceint is %d \n", distanceint);
+    break;
     case 'f':
       //printf(strdup(optarg));
       printf("file argument\n");
@@ -324,7 +329,7 @@ break;
   /** Try to initialize the cracking-engine */
   if(!initPDFCrack(e, userpassword, work_with_user, wordlistfile,
 		   wordlistfile?Wordlist:Generative, wordlist, charset, 
-		   (unsigned int)minpw, (unsigned int)maxpw, permutation, startint, finishint, maximumcounter)) {
+		   (unsigned int)minpw, (unsigned int)maxpw, permutation, startint, finishint, maximumcounter, distanceint)) {
     cleanPDFCrack();
     fprintf(stderr, "Wrong userpassword, '%s'\n", userpassword);
     ret = 7;

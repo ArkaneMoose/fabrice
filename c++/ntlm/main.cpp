@@ -212,19 +212,25 @@ void checkPassword(string password) {
 		if (start_reached == false)
 		{
 			cout << "start_reached = true, counter reset" << endl; 
-			start_reached = true; 	
-			
+			start_reached = true; 
 			if (si != 0 && fi != 0)
 			{
+				if (distancei == 0)
+				{
 				distancei = abs(fi - si) + 1; 	
+				}
 				fi = fi - si; 
 			}
 			else if (si == 0 && fi != 0)
 			{
-				distancei = fi + 1; 	
+				if (distancei == 0)
+				{
+				distancei = fi + 1; 
+				}	
 			}
 			si = 0;
 			cout << "distancei set" << endl << distancei << endl; 
+			
 			counter = 0; 
 			cout << "counter reset" << endl; 
 			cout << counter << endl; 
@@ -232,7 +238,7 @@ void checkPassword(string password) {
 		}
 		//cout << "counter check 2- " << counter << endl; 
 	//if (counter <= fi || fi == 0 && (distancei == 0 || counter <= distancei))
-	if (distancei == 0 || counter <= distancei)
+	if (distancei == 0 || counter <= distancei && start_reached == true)
 	{
 		
     string md5hash = encrypt_ntlm(password);
@@ -292,6 +298,10 @@ int main(int argc, char* argv[]) {
 		else if (s.substr(0, 4) == "-mc=")
 		{
 			istringstream(s.substr(4)) >> max_counter;
+		}
+		else if (s.substr(0, 4) == "-di=")
+		{
+			istringstream(s.substr(4)) >> distancei;	
 		}
 		else
 		{

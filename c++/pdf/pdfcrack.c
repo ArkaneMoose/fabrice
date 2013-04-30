@@ -24,6 +24,7 @@
 #include <string.h>
 #include <time.h>
 #include <ctype.h>
+#include <math.h>
 #include "pdfcrack.h"
 #include "md5.h"
 #include "rc4.h"
@@ -55,6 +56,7 @@ static uint8_t *currPW;
 static unsigned int currPWLen;
 static unsigned int si = 0;
 static unsigned int fi = 0;
+
 /** statistics */
 static bool startreached = false;  
 static unsigned long long int maxcounter = 0;
@@ -452,13 +454,40 @@ if (maxcounter == 0 && nrprocessed > 1000000000)
 {
 nrprocessed = 0;
 printf("max counter not set and is 0, nrprocessed reset to %d \n", nrprocessed);
-
 }
-if (nrprocessed >= maxcounter && maxcounter != 0)
+if (maxcounter != 0 && nrprocessed >= maxcounter && startreached == false)
 {
 printf("nrprocessed exceeded maxcounter. value=%d \n", nrprocessed);
+nrprocessed = 0;
+printf("nrprocessed reset because startreached is false \n"); 
+}
+else if (maxcounter != 0 && nrprocessed >= maxcounter && startreached == true)
+{
+printf("max counter reached and startreached is true, stopping \n");
+exit(1);
+}
+
+if (distancei != 0 && nrprocessed > distancei && startreached == true)
+{
+  char str[33];
+  memcpy(str,currPW,currPWLen);
+  str[currPWLen] = '\0';
+  printf("Current Word: '%s'\n",str);
+printf("currPWLen: %d \n", currPWLen);
+printf("nrprocessed %d \n", nrprocessed);
+printf("distancei != 0 && nrprocessed > distancei && startreached == true (stopping)\n");
+exit(1); 
+}
+
+if ((distancei == 0 || (distancei != 0 && nrprocessed <= distancei)))
+{
 if (startreached == false)
 {
+printf("start int: %d\n", si);
+
+printf("current nrprocessed %d \n", nrprocessed);
+nrprocessed = 0;
+printf("Start Reached! Counter reset to %d \n", nrprocessed);
 if (si > 0)
 {
 si = si - nrprocessed;
@@ -469,38 +498,19 @@ fi = fi - nrprocessed;
 }
 if (si == 0 && fi != 0)
 {
-distancei = fi;
-}
-else if (si != 0 && fi == 0)
+if (distancei == 0)
 {
-distancei = 0;
+distancei = abs(fi) + 1;
+}
 }
 else if (si != 0 && fi != 0)
 {
-distancei = fi - si;
-}
-else
+if (distancei == 0)
 {
-distancei = 0;
-}
-nrprocessed = 0;
-printf("nrprocessed reset because startreached is false \n"); 
-}
-else
-{
-printf("max counter reached and startreached is true, stopping \n");
-exit(1);
+distancei = abs(fi - si) + 1;
 }
 }
-if (nrprocessed >= si && nrprocessed <= fi)
-{
-if (startreached == false)
-{
-printf("start int: %d\n", si);
-
-printf("current nrprocessed %d \n", nrprocessed);
-nrprocessed = 0;
-printf("Start Reached! Counter reset to %d \n", nrprocessed);
+//nrprocessed = 0;
 startreached = true;
 md5(encKeyWorkSpace, ekwlen, enckey);
 if (rc4Match40b(enckey, encdata->u_string, pad))
@@ -508,17 +518,22 @@ if (rc4Match40b(enckey, encdata->u_string, pad))
 return true;
 }
 }
+else
+{
+
       md5(encKeyWorkSpace, ekwlen, enckey);
 
       /* Algorithm 3.4 reversed */
       if(rc4Match40b(enckey, encdata->u_string, pad))
 	return true;
 }
-else if (nrprocessed >= fi && fi != 0)
+}
+if (nrprocessed >= fi && fi != 0)
 {
 printf("final index reached \n");
 exit(1);
 }
+
       ++nrprocessed;
     } while(permutate());
   } while(nextPassword());
@@ -620,7 +635,7 @@ bool
 initPDFCrack(const EncData *e, const uint8_t *upw, const bool user,
 	     const char *wl, const passwordMethod pm, FILE *file,
 	     const char *cs, const unsigned int minPw,
-	     const unsigned int maxPw, const bool perm, const int startinteger, const int finishinteger, const unsigned long long int max_counter) {
+	     const unsigned int maxPw, const bool perm, const int startinteger, const int finishinteger, const unsigned long long int max_counter, const unsigned long long int distance_i) {
   uint8_t buf[128];
   unsigned int upwlen;
   uint8_t *tmp;
@@ -688,6 +703,7 @@ printf("startinteger = %d and finishinteger = %d\n", startinteger, finishinteger
   fi = finishinteger;
   maxcounter = max_counter;
 printf("maxcounter = %d \n", maxcounter);
+distancei = distance_i;
   return true;
 }
 
