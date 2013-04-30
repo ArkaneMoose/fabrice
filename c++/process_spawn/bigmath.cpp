@@ -78,7 +78,7 @@ string big_int_add(string number1, string number2)
 	{
 		string backward_result = ""; 
 		int carryover = 0; 
-		for (int i = number1.length() -1; i > 0; i--)
+		for (int i = number1.length() -1; i >= 0; i--)
 		{
 			stringstream ssdigit1, ssdigit2;
 			string sdigit1, sdigit2; 
@@ -90,7 +90,7 @@ string big_int_add(string number1, string number2)
 			istringstream(sdigit1) >> digit1;
 			istringstream(sdigit2) >> digit2; 
 			int newdigit = digit1 + digit2 + carryover; 
-			cout << newdigit << endl; 
+			//cout << "digit:" << newdigit << endl; 
 			if (newdigit < 10)
 			{
 				carryover = 0;
@@ -100,7 +100,7 @@ string big_int_add(string number1, string number2)
 				digitstringstream >> digitstring; 
 				backward_result += digitstring; 
 			}
-			else if (newdigit >= 10 && i == 1)
+			else if (newdigit >= 10 && i == 0)
 			{
 				stringstream digitstringstream;
 				string digitstring; 
@@ -138,7 +138,7 @@ string big_int_add(string number1, string number2)
 			number2 = leadzero + number2; 
 			string backward_result = ""; 
 			int carryover = 0; 
-			for (int i = number1.length() -1; i > 0; i--)
+			for (int i = number1.length() -1; i >= 0; i--)
 			{
 				stringstream ssdigit1, ssdigit2;
 				string sdigit1, sdigit2; 
@@ -150,7 +150,7 @@ string big_int_add(string number1, string number2)
 				istringstream(sdigit1) >> digit1;
 				istringstream(sdigit2) >> digit2; 
 				int newdigit = digit1 + digit2 + carryover; 
-				cout << newdigit << endl; 
+				//cout << "digit:" << newdigit << endl; 
 				if (newdigit < 10)
 				{
 					carryover = 0;
@@ -160,7 +160,7 @@ string big_int_add(string number1, string number2)
 					digitstringstream >> digitstring; 
 					backward_result += digitstring; 
 				}
-				else if (newdigit >= 10 && i == 1)
+				else if (newdigit >= 10 && i == 0)
 				{
 					stringstream digitstringstream;
 					string digitstring; 
@@ -196,7 +196,7 @@ string big_int_add(string number1, string number2)
 			number1 = leadzero + number1; 
 			string backward_result = ""; 
 			int carryover = 0; 
-			for (int i = number1.length() -1; i > 0; i--)
+			for (int i = number1.length() -1; i >= 0; i--)
 			{
 				stringstream ssdigit1, ssdigit2;
 				string sdigit1, sdigit2; 
@@ -208,7 +208,7 @@ string big_int_add(string number1, string number2)
 				istringstream(sdigit1) >> digit1;
 				istringstream(sdigit2) >> digit2; 
 				int newdigit = digit1 + digit2 + carryover; 
-				cout << newdigit << endl; 
+				//cout << "digit:" << newdigit << endl; 
 				if (newdigit < 10)
 				{
 					carryover = 0;
@@ -218,7 +218,7 @@ string big_int_add(string number1, string number2)
 					digitstringstream >> digitstring;
 					backward_result += digitstring; 
 				}
-				else if (newdigit >= 10 && i == 1)
+				else if (newdigit >= 10 && i == 0)
 				{
 					stringstream digitstringstream;
 					string digitstring; 
@@ -247,6 +247,6 @@ string big_int_add(string number1, string number2)
 }
 int main()
 {
-	cout << big_int_add("316", "896") << endl; 
+	cout << "big_int_add(316,896) - " << big_int_add("316", "896") << endl; 
 	return EXIT_SUCCESS; 
 }
