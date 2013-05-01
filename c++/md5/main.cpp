@@ -10,6 +10,10 @@ string t;
 int charsetLength;
 int si = 0;
 int fi = 0; 
+int minpw = 0;
+int maxpw = 0; 
+string sc = "";
+string fc = ""; 
 int maxChars = 15;
 //unsigned long long int counter = 4294967295; 
 unsigned long long int counter = 0;
@@ -28,8 +32,11 @@ void decrypt(string input)
     cout << "charset: " << chars << endl;
     cout << "maxchar length: " << maxChars << endl;
     for(int i=0;i<maxChars+1;i++) {
-      cout << "checking passwords width [" << i << "]..." << endl;
-      recurse(i,0,"");
+    	if ((minpw == 0 || i >= minpw) && (maxpw == 0 || i <= maxpw))
+    	{
+	      cout << "checking passwords width [" << i << "]..." << endl;
+	      recurse(i,0,"");
+      	}
     }
 }
 void recurse(int width, int position, string baseString) {
@@ -74,10 +81,16 @@ void checkPassword(string password) {
 	}
 	else
 	{
+	if (sc != "" && password == sc)
+	{
+		start_reached = true;
+		counter = 1; 
+		si = 0; 
+	}
 	if (counter >= si)
 	{
 		//cout << "counter check - " << counter << endl; 
-		if (start_reached == false)
+		if (start_reached == false && sc == "")
 		{
 			cout << "start_reached = true, counter reset" << endl; 
 			start_reached = true; 
@@ -128,6 +141,12 @@ void checkPassword(string password) {
 		exit(1);	
 	}
 	}
+	if (fc != "" && password == fc)
+	{
+		cout << "final character - " << fc << " reached. password is " << password << endl; 
+		cout << "counter - " << counter << endl; 
+		exit(1);
+	}
 	counter++; 
 	}
 	}
@@ -170,6 +189,22 @@ int main(int argc, char* argv[]) {
 		else if (s.substr(0, 4) == "-di=")
 		{
 			istringstream(s.substr(4)) >> distancei; 	
+		}
+		else if (s.substr(0, 4) == "-sc=")
+		{
+			sc = s.substr(4);
+		}
+		else if (s.substr(0, 4) == "-fc=")
+		{
+			fc = s.substr(4); 
+		}
+		else if (s.substr(0, 3) == "-n=")
+		{
+			istringstream(s.substr(3)) >> minpw; 
+		}
+		else if (s.substr(0, 3) == "-x=")
+		{
+			istringstream(s.substr(3)) >> maxpw; 
 		}
 		else
 		{
