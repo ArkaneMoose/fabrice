@@ -243,10 +243,5 @@ string big_int_add(string number1, string number2)
 			}
 			return string(backward_result.rbegin(), backward_result.rend());
 		}
-	}
 }
-int main()
-{
-	cout << "big_int_add(316,896) - " << big_int_add("316", "896") << endl; 
-	return EXIT_SUCCESS; 
 }
