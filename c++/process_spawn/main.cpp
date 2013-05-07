@@ -47,7 +47,8 @@ return data;
 int main (int argc, char* argv[])
 {
 cout << big_int_add("69", "100") << endl; 
-//cout << GetStdoutFromCommand("du /usr/lib") << endl;
+cout << GetStdoutFromCommand("du /usr/lib") << endl;
+cout << GetStdoutFromCommand("du /home/jwpilly/Git") << endl;
 cout << readFile("test.txt") << endl;
 cout << "Parameters \n" << endl;
 bool templateset = false; 

@@ -254,10 +254,10 @@ void checkPassword(string password) {
 	if (distancei == 0 || counter <= distancei && start_reached == true)
 	{
 		
-    string md5hash = encrypt_ntlm(password);
+    string ntlmhash = encrypt_ntlm(password);
 	//cout << counter << ":" << md5hash << endl;
-    if (md5hash==t) {
-      cout << "match [" << md5hash << "]" << endl;
+    if (ntlmhash==t) {
+      cout << "match [" << ntlmhash << "]" << endl;
       cout << "counter - " << counter << endl;
       cout << password << endl;
       exit(1);
